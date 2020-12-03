@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 import Search from './Search'
+import List from './List'
 
 //router
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -11,9 +12,8 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/" component={ Search } exact />
-          <Route path="/found" component={ List } exact />
+          <Route path="/list" component={ List } exact />
         </Switch>
-        <Search/>
       </div>
     </BrowserRouter>
   );
