@@ -1,7 +1,8 @@
-const express = require('express'),
-    app       = express(),
-    fetch     = require('node-fetch'),
-    cors      = require('cors');
+const functions = require('firebase-functions'),
+      express   = require('express'),
+      app       = express(),
+      fetch     = require('node-fetch'),
+      cors      = require('cors');
 
 
 //middleware
@@ -23,7 +24,7 @@ app.get("/location", (req, res) => {
     }}).then(apiRes => {
         return apiRes.json()
     }).then(json => {
-        res.send(json)
+        return res.send(json)
     }).catch(() => {
         res.send("Uh oh something went wrong")
     })
@@ -51,8 +52,11 @@ app.get("/search/:query", (req, res) => {
             //send resturaunt ids back to client
             console.log("sent list back to client")
             console.log(json)
-            res.json(json)
+            return res.json(json)
+        }).catch(() => {
+            res.send("Uh oh something went wrong")
         })
+        throw Error
     }).catch(() => {
         res.send("Uh oh something went wrong")
     })
@@ -65,14 +69,11 @@ app.get('/resturaunt/:id', (req,res) => {
     }}).then(apiRes => {
         return apiRes.json()
     }).then(json => {
-        res.send(json)
+        return res.send(json)
     }).catch(() => {
         res.send("Uh oh something went wrong")
     })
 })
 
 
-
-app.listen(8888, () => {
-    console.log("Started")
-})
+exports.api = functions.https.onRequest(app)

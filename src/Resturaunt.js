@@ -21,6 +21,7 @@ export const Resturaunt = (props) => {
         <Card.Text>
             {info}
             <p>Contact Info: {props.info.phone_numbers}</p>
+            <p>Address: {props.info.location.address}</p>
         </Card.Text>
         <Button variant="primary"><a href={props.info.url} className="text-light">More Info</a></Button>
         </Card.Body>

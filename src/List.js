@@ -13,10 +13,11 @@ export const List = () => {
     const history = useHistory() 
     const [resturaunts, setResturaunts] = useState([])
     const location = useSelector(state => state.location)
+    
 
     //Split functions for async await and promise chaining
     const getSingleResturaunt = async resturauntID => {
-        return await fetch(`http://localhost:8888/resturaunt/${resturauntID}`)
+        return await fetch(`https://us-central1-mih-test.cloudfunctions.net/api/resturaunt/${resturauntID}`)
         .then(res => res.json()).then(json => {
             return json
         })
@@ -38,12 +39,15 @@ export const List = () => {
         <Container>
             <Jumbotron>
                 <h1>Resturaunts located in {location.location.title}</h1>
+                <Button>
+                    <Link to="/" className="text-light">Search again</Link>
+                </Button>
             </Jumbotron>
                 <Row>
                     {resturaunts.map((e, i) => {
                     return(
                         <Col md={4}>
-                            <Resturaunt info={e}/>
+                            <Resturaunt key={i} info={e}/>
                         </Col>
                         )
                     })}
