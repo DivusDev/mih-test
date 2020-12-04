@@ -31,7 +31,7 @@ export const List = () => {
         getAllResturaunts().then(resturaunts => setResturaunts(resturaunts))
     },[])
     useEffect(()=>{
-        console.log(resturaunts)
+        // console.log(resturaunts)
     },[resturaunts])
     
     return (
@@ -46,8 +46,8 @@ export const List = () => {
                 <Row>
                     {resturaunts.map((e, i) => {
                     return(
-                        <Col md={4}>
-                            <Resturaunt key={i} info={e}/>
+                        <Col key={i} md={4}>
+                            <Resturaunt info={e}/>
                         </Col>
                         )
                     })}

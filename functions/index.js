@@ -6,7 +6,9 @@ const functions = require('firebase-functions'),
 
 
 //middleware
-app.use(cors());
+app.use(cors({ origin: true }));
+
+
 
     //api key 3f35b2ddadbcb04b9bdd89fb3b1a336e
     //2ND API KEY 495cb450c57d7bf3c5ea5ea58ca98552
@@ -33,6 +35,7 @@ app.get("/location", (req, res) => {
 })
 
 app.get("/search/:query", (req, res) => {
+    res.set('Access-Control-Allow-Origin', '*');
     console.log("hit api")
     //fetch entity type and id from location search api
     fetch("https://developers.zomato.com/api/v2.1/locations?query=" + req.params.query, { method:"get", headers: {
@@ -41,7 +44,9 @@ app.get("/search/:query", (req, res) => {
     }}).then(apiRes => {
         return apiRes.json()
     }).then(json => {
-        if (json['location_suggestions'].length < 1) res.json({})
+        console.log(json['location_suggestions'])
+        if (json['location_suggestions'].length < 1) return res.json({})
+        console.log("more than one")
         //use fetched data to find nearby resturaunts
         fetch(`https://developers.zomato.com/api/v2.1/location_details?entity_id=${json['location_suggestions'][0]['entity_id']}&entity_type=${json['location_suggestions'][0]['entity_type']}`, { method:"get", headers: {
         "user-key": key,
@@ -52,11 +57,12 @@ app.get("/search/:query", (req, res) => {
             //send resturaunt ids back to client
             console.log("sent list back to client")
             console.log(json)
-            return res.json(json)
+            res.json(json)
+            return
         }).catch(() => {
-            res.send("Uh oh something went wrong")
+            res.json({})
         })
-        throw Error
+        return
     }).catch(() => {
         res.send("Uh oh something went wrong")
     })

@@ -22,8 +22,14 @@ export const Search = () => {
         e.preventDefault()
         //fetch data from node endpoint
         console.log(currLocation)
+        //
         fetch(`https://us-central1-mih-test.cloudfunctions.net/api/search/${currLocation}`)
-        .then(res => res.json()).then(json => {
+        .then(res => {
+            console.log("recieved")
+            console.log(res)
+            return res.json()
+        }).then(json => {
+            console.log("hi")
             console.log(json)
             if (Object.entries(json).length > 0){
                 //put recieved data in redux store
