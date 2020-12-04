@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { connect, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom'
+
+import { Container, Jumbotron, InputGroup, Form, Button } from 'react-bootstrap';
 
 export const Search = () => {
 
@@ -40,14 +42,28 @@ export const Search = () => {
     
     return (
 
-        <div className="container">
-            <h1>Where are you located?</h1>
-            <form onSubmit={handleSubmit}>
-                <input name="query" type="text" onChange={handleChange} ></input>
-                <label htmlFor="query"> Your location</label>
-                <button type='submit'></button>
-            </form>
-        </div>
+        <Container fluid="justify-content-md-center">
+            <Jumbotron>
+                <h1>Find resturaunts near you!</h1>
+                <p>This is a simple tool designed to help you find new exciting places to eat around you</p>
+                <p>
+                    Just enter your city and press the Search button
+                </p>
+            </Jumbotron>
+            <Container>
+                <Form onSubmit={handleSubmit}>
+                    <InputGroup>
+                        <InputGroup.Prepend>
+                        <InputGroup.Text>City or County</InputGroup.Text>
+                        </InputGroup.Prepend>
+                            <Form.Control type="text" placeholder="New York" size="lg" onChange={handleChange}/>
+                            <InputGroup.Append>
+                        <Button variant="outline-primary" type="submit">Find Me a Place to Eat!</Button>
+                        </InputGroup.Append>
+                    </InputGroup>
+                </Form>
+            </Container>
+        </Container>
     )
 
 }

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { connect, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useHistory, Link } from 'react-router-dom'
-import { get } from 'request';
+import { Container, Button, Row, Col, Jumbotron } from 'react-bootstrap'
 
 import Resturaunt from './Resturaunt'
 
@@ -35,14 +35,24 @@ export const List = () => {
     
     return (
 
-        <div className="container">
-            <h1>Resturaunts located in {location.location.title}</h1>
-            {resturaunts.map((e) => {
-                return <Resturaunt info={e}/>
-            })}
-            <Link to="/">Search again</Link>
-
-        </div>
+        <Container>
+            <Jumbotron>
+                <h1>Resturaunts located in {location.location.title}</h1>
+            </Jumbotron>
+                <Row>
+                    {resturaunts.map((e, i) => {
+                    return(
+                        <Col md={4}>
+                            <Resturaunt info={e}/>
+                        </Col>
+                        )
+                    })}
+                </Row>
+            
+            <Button>
+                <Link to="/" className="text-light">Search again</Link>
+            </Button>
+        </Container>
 
     )
 
